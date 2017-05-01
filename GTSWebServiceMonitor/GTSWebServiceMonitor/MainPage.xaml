@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GTSWebServiceMonitor"
+             x:Class="GTSWebServiceMonitor.MainPage">
+    <StackLayout Padding="25">
+        <Label HorizontalTextAlignment="Center" TextColor="Black" Text="GTS Web Services Monitor"></Label>
+        <ListView x:Name="lstServicos" ItemsSource="{Binding Servicos}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="{Binding Descricao}" TextColor="{Binding Cor, Mode=TwoWay}"></Label>
+                                <Label Text="{Binding URL}" TextColor="{Binding Cor, Mode=TwoWay}" FontSize="Small"></Label>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
