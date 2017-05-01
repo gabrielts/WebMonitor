@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GTSWebServiceMonitor
 {
-    class Descricao : Attribute
+    public enum Status
     {
+        NotVerified,
 
-        public string Descr { get; set; }
+        Verifying,
 
-        public Descricao(string descricao)
-        {
-            Descr = descricao;
-        }
-
+        Online,
+        
+        NoResponse,
     }
 }

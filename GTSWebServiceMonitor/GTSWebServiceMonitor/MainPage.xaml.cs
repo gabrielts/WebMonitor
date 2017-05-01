@@ -12,26 +12,26 @@ namespace GTSWebServiceMonitor
     {
 
         public string Texto { get; set; }
-        public List<Servico> Servicos { get; set; }
+        public List<Service> Services { get; set; }
 
         public MainPage()
         {
             InitializeComponent();
-            this.Servicos = new List<Servico>()
+            this.Services = new List<Service>()
             {
-                new Servico { Descricao="CAMERA GARAGEM FRENTE", URL = "http://neuropsicotico.servebeer.com:8081" },
-                new Servico { Descricao="CAMERA GARAGEM ATRÁS", URL = "http://neuropsicotico.servebeer.com:8082" },
-                new Servico { Descricao="CAMERA LATERAL ATRÁS", URL = "http://neuropsicotico.servebeer.com:8083" }
+                new Service { Description="CAMERA GARAGEM FRENTE", URL = "http://neuropsicotico.servebeer.com:8081" },
+                new Service { Description="CAMERA GARAGEM ATRÁS", URL = "http://neuropsicotico.servebeer.com:8082" },
+                new Service { Description="CAMERA LATERAL ATRÁS", URL = "http://neuropsicotico.servebeer.com:8083" }
             };
             this.BindingContext = this;
             Device.StartTimer(new TimeSpan(0, 0, 5), () =>
             {
-                foreach (Servico servico in Servicos)
+                foreach (Service service in Services)
                 {
-                    servico.Atualizar(() =>
+                    service.Refresh(() =>
                     {
                         OnPropertyChanged();
-                        OnPropertyChanged(nameof(servico.Cor));
+                        OnPropertyChanged(nameof(service.Color));
                     });
                 }
                 return true;
