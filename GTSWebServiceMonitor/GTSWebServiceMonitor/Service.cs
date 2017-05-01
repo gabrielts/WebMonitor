@@ -1,6 +1,7 @@
 ﻿using ModernHttpClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,41 +12,55 @@ using Xamarin.Forms;
 
 namespace GTSWebServiceMonitor
 {
-    public class Service
+    public class Service : INotifyPropertyChanged
     {
+
+        public event PropertyChangedEventHandler PropertyChanged;
         public string Description { get; set; }
         public string URL { get; set; }
-        public Status Status { get; set; } = Status.NotVerified;
+        private Status status;
+        public Status Status
+        {
+            get
+            {
+                return status;
+            }
+            set
+            {
+                status = value;
+                PropertyChanged.Invoke(Status, new PropertyChangedEventArgs(nameof(Color)));
+            }
+        }
         public Color Color
         {
             get
             {
-                if (Status == Status.Verifying) return Color.Orange;
+                if (Status == Status.Verifying) return Color.Yellow;
                 else if (Status == Status.Online) return Color.Green;
-                else if (Status == Status.NoResponse) return Color.Tomato;
-                return Color.Yellow;
+                else if (Status == Status.Warning) return Color.Tomato;
+                else if (Status == Status.NoResponse) return Color.Red;
+                return Color.Orange;
             }
         }
-        public void Refresh(Action updateStatus)
+
+        public void Refresh()
         {
-            Task t = new Task(() =>
+            Task.Run(() =>
             {
                 try
                 {
                     Status = Status.Verifying;
-                    updateStatus();
                     var httpClient = new HttpClient(new NativeMessageHandler());
                     httpClient.Timeout = new TimeSpan(0, 0, 1);
                     HttpResponseMessage response = httpClient.GetAsync(URL).Result;
-                    Status = Status.Online;
+                    if (response.IsSuccessStatusCode) Status = Status.Online;
+                    else Status = Status.Warning;
                 }
                 catch
                 {
                     Status = Status.NoResponse;
                 }
-                updateStatus();
             });
-            t.Start();
         }
 
     }

@@ -15,7 +15,9 @@ namespace GTSWebServiceMonitor
         Verifying,
 
         Online,
-        
+
+        Warning,
+
         NoResponse,
     }
 }
