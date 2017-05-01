@@ -24,18 +24,26 @@ namespace GTSWebServiceMonitor
                 new Service { Description="CAMERA LATERAL ATRÁS", URL = "http://neuropsicotico.servebeer.com:8083" }
             };
             this.BindingContext = this;
-            Device.StartTimer(new TimeSpan(0, 0, 5), () =>
+            Device.StartTimer(new TimeSpan(0, 0, 10), () =>
+             {
+                 Refresh();
+                 return true;
+             });
+        }
+
+        private void Refresh()
+        {
+            foreach (Service service in Services)
             {
-                foreach (Service service in Services)
+                service.Refresh(() =>
                 {
-                    service.Refresh(() =>
+                    Device.BeginInvokeOnMainThread(() =>
                     {
                         OnPropertyChanged();
                         OnPropertyChanged(nameof(service.Color));
                     });
-                }
-                return true;
-            });
+                });
+            }
         }
     }
 }

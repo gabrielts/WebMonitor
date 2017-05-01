@@ -1,7 +1,10 @@
-﻿using System;
+﻿using ModernHttpClient;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -23,11 +26,26 @@ namespace GTSWebServiceMonitor
                 return Color.Yellow;
             }
         }
-        public void Refresh(Action callback)
+        public void Refresh(Action updateStatus)
         {
-            //TODO Test if online
-            Status = Status.NoResponse;
-            callback();
+            Task t = new Task(() =>
+            {
+                try
+                {
+                    Status = Status.Verifying;
+                    updateStatus();
+                    var httpClient = new HttpClient(new NativeMessageHandler());
+                    httpClient.Timeout = new TimeSpan(0, 0, 1);
+                    HttpResponseMessage response = httpClient.GetAsync(URL).Result;
+                    Status = Status.Online;
+                }
+                catch
+                {
+                    Status = Status.NoResponse;
+                }
+                updateStatus();
+            });
+            t.Start();
         }
 
     }
