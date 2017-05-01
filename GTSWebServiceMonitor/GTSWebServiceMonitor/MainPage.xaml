@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GTSWebServiceMonitor"
              x:Class="GTSWebServiceMonitor.MainPage">
+    
     <StackLayout Padding="25" >
         <Label HorizontalTextAlignment="Center" TextColor="Black" Text="GTS Web Services Monitor" VerticalOptions="Start"></Label>
         <ListView x:Name="lstServices" ItemsSource="{Binding Services}" BackgroundColor="White" VerticalOptions="StartAndExpand">

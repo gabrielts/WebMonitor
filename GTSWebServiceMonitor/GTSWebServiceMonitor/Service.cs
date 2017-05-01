@@ -16,8 +16,11 @@ namespace GTSWebServiceMonitor
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public string Description { get; set; }
+
         public string URL { get; set; }
+
         private Status status;
         public Status Status
         {
@@ -31,6 +34,7 @@ namespace GTSWebServiceMonitor
                 PropertyChanged.Invoke(Status, new PropertyChangedEventArgs(nameof(Color)));
             }
         }
+
         public Color Color
         {
             get

@@ -17,6 +17,7 @@ namespace GTSWebServiceMonitor
         public MainPage()
         {
             InitializeComponent();
+
             this.Services = new List<Service>()
             {
                 new Service { Description="CAMERA GARAGEM FRENTE", URL = "http://neuropsicotico.servebeer.com:8081" },
@@ -24,6 +25,7 @@ namespace GTSWebServiceMonitor
                 new Service { Description="CAMERA LATERAL ATRÁS", URL = "http://neuropsicotico.servebeer.com:8083" },
                 new Service { Description="ROTEADOR", URL = "http://192.168.16.1" }
             };
+
             this.BindingContext = this;
         }
 
