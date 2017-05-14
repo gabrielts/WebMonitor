@@ -1,0 +1,6 @@
+# WebMonitor
+An app developed in Xamarin.Forms that monitors web services.
+
+When my wife and daug is sleeping, i'm coding, well... when I not sleeping too...
+
+This project is for fun... have fun with me...
