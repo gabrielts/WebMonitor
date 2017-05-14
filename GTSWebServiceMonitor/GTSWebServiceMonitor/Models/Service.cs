@@ -47,24 +47,21 @@ namespace GTSWebServiceMonitor
             }
         }
 
-        public void Refresh()
+        public async void Refresh()
         {
-            Task.Run(() =>
+            try
             {
-                try
-                {
-                    Status = Status.Verifying;
-                    var httpClient = new HttpClient(new NativeMessageHandler());
-                    httpClient.Timeout = new TimeSpan(0, 0, 1);
-                    HttpResponseMessage response = httpClient.GetAsync(URL).Result;
-                    if (response.IsSuccessStatusCode) Status = Status.Online;
-                    else Status = Status.Warning;
-                }
-                catch
-                {
-                    Status = Status.NoResponse;
-                }
-            });
+                Status = Status.Verifying;
+                var httpClient = new HttpClient(new NativeMessageHandler());
+                httpClient.Timeout = new TimeSpan(0, 0, 5);
+                HttpResponseMessage response = await httpClient.GetAsync(URL);
+                if (response.IsSuccessStatusCode) Status = Status.Online;
+                else Status = Status.Warning;
+            }
+            catch (Exception ex)
+            {
+                Status = Status.NoResponse;
+            }
         }
 
     }

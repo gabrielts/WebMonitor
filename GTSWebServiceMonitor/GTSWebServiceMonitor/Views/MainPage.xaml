@@ -20,7 +20,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="btnRefresh" Clicked="btnRefresh_Clicked" Text="Refresh" BackgroundColor="LightGreen" TextColor="White" VerticalOptions="End"></Button>
+        <Button Command="{Binding RefreshCommand}" Text="Refresh" BackgroundColor="LightGreen" TextColor="White" VerticalOptions="End"></Button>
     </StackLayout>
 
 </ContentPage>

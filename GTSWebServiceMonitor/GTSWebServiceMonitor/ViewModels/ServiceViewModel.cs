@@ -1,32 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace GTSWebServiceMonitor
+namespace GTSWebServiceMonitor.ViewModel
 {
-
-    public partial class MainPage : ContentPage
+    public class ServiceViewModel : BaseViewModel
     {
 
-        public string Texto { get; set; }
-        public List<Service> Services { get; set; }
+        public ObservableCollection<Service> Services { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
-        public MainPage()
+        public ServiceViewModel()
         {
-            InitializeComponent();
-
-            this.Services = new List<Service>()
+            this.RefreshCommand = new Command(() =>
             {
+                Refresh();
+            }, () =>
+            {
+                return this.Services.Count > 0;
+            });
+
+            this.Services = new ObservableCollection<Service>()
+            {
+                //TODO Cadastro
                 new Service { Description="CAMERA GARAGEM FRENTE", URL = "http://neuropsicotico.servebeer.com:8081" },
                 new Service { Description="CAMERA GARAGEM ATRÁS", URL = "http://neuropsicotico.servebeer.com:8082" },
                 new Service { Description="CAMERA LATERAL ATRÁS", URL = "http://neuropsicotico.servebeer.com:8083" },
                 new Service { Description="ROTEADOR", URL = "http://192.168.16.1" }
             };
-
-            this.BindingContext = this;
         }
 
         private void Refresh()
@@ -37,9 +44,5 @@ namespace GTSWebServiceMonitor
             }
         }
 
-        private void btnRefresh_Clicked(object sender, EventArgs e)
-        {
-           Refresh();
-        }
     }
 }
