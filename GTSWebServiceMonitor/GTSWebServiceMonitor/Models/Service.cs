@@ -1,4 +1,6 @@
-﻿using ModernHttpClient;
+﻿using GTSWebServiceMonitor.Models;
+using ModernHttpClient;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,16 +14,56 @@ using Xamarin.Forms;
 
 namespace GTSWebServiceMonitor
 {
-    public class Service : INotifyPropertyChanged
+    public class Service : BaseNotifyPropertyChanged
     {
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private int id;
+        [PrimaryKey, AutoIncrement]
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                this.id = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Description { get; set; }
+        private string description;
+        [NotNull]
+        public string Description
+        {
+            get
+            {
+                return this.description;
+            }
+            set
+            {
+                this.description = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string URL { get; set; }
+        private string url;
+        [NotNull]
+        public string URL
+        {
+            get
+            {
+                return this.url;
+            }
+            set
+            {
+                this.url = value;
+                OnPropertyChanged();
+            }
+        }
 
         private Status status;
+        [Ignore]
         public Status Status
         {
             get
@@ -31,19 +73,42 @@ namespace GTSWebServiceMonitor
             set
             {
                 status = value;
-                PropertyChanged.Invoke(Status, new PropertyChangedEventArgs(nameof(Color)));
+                OnPropertyChanged();
+                if (Status == Status.Verifying) this.Color = Color.Yellow;
+                else if (Status == Status.Online) this.Color = Color.Green;
+                else if (Status == Status.Warning) this.Color = Color.Tomato;
+                else if (Status == Status.NoResponse) this.Color = Color.Red;
+                else this.Color = Color.Orange;
             }
         }
 
+        private Color color;
+        [Ignore]
         public Color Color
         {
             get
             {
-                if (Status == Status.Verifying) return Color.Yellow;
-                else if (Status == Status.Online) return Color.Green;
-                else if (Status == Status.Warning) return Color.Tomato;
-                else if (Status == Status.NoResponse) return Color.Red;
-                return Color.Orange;
+                return this.color;
+            }
+            set
+            {
+                this.color = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool refreshing;
+        [Ignore]
+        public bool Refreshing
+        {
+            get
+            {
+                return this.refreshing;
+            }
+            set
+            {
+                this.refreshing = value;
+                OnPropertyChanged();
             }
         }
 
@@ -51,9 +116,13 @@ namespace GTSWebServiceMonitor
         {
             try
             {
+                Refreshing = true;
                 Status = Status.Verifying;
-                var httpClient = new HttpClient(new NativeMessageHandler());
-                httpClient.Timeout = new TimeSpan(0, 0, 5);
+                var httpClient = new HttpClient(new NativeMessageHandler())
+                {
+                    //Todo configuration
+                    Timeout = new TimeSpan(0, 0, 7)
+                };
                 HttpResponseMessage response = await httpClient.GetAsync(URL);
                 if (response.IsSuccessStatusCode) Status = Status.Online;
                 else Status = Status.Warning;
@@ -61,6 +130,10 @@ namespace GTSWebServiceMonitor
             catch (Exception ex)
             {
                 Status = Status.NoResponse;
+            }
+            finally
+            {
+                Refreshing = false;
             }
         }
 

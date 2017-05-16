@@ -1,26 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:GTSWebServiceMonitor"
-             x:Class="GTSWebServiceMonitor.MainPage">
-    
-    <StackLayout Padding="25" >
-        <Label HorizontalTextAlignment="Center" TextColor="Black" Text="GTS Web Services Monitor" VerticalOptions="Start"></Label>
-        <ListView x:Name="lstServices" ItemsSource="{Binding Services}" BackgroundColor="White" VerticalOptions="StartAndExpand">
+             xmlns:local="clr-namespace:GTSWebServiceMonitor.Views"
+             x:Class="GTSWebServiceMonitor.Views.MainPage"
+             Title="Web Service Monitor">
+    <StackLayout Padding="15" >
+        <Button Command="{Binding AddCommand}" Text="Add New Service" BackgroundColor="LightGreen" TextColor="White" VerticalOptions="Start"></Button>
+        <ListView x:Name="lstServices" SelectedItem="{Binding SelectedService}" ItemsSource="{Binding Services}" BackgroundColor="White" VerticalOptions="StartAndExpand">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.View>
-                            <StackLayout Orientation="Vertical">
-                                <Label Text="{Binding Description}" TextColor="{Binding Color}"></Label>
-                                <Label Text="{Binding URL}" TextColor="{Binding Color}" FontSize="Small"></Label>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding Description}" TextColor="{Binding Color}"></Label>
+                                    <Label Text="{Binding URL}" TextColor="{Binding Color}" FontSize="Small"></Label>
+                                </StackLayout>
+                                <ActivityIndicator HorizontalOptions="End" IsVisible="{Binding Refreshing}" IsRunning="{Binding Refreshing}"></ActivityIndicator>
                             </StackLayout>
                         </ViewCell.View>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Command="{Binding RefreshCommand}" Text="Refresh" BackgroundColor="LightGreen" TextColor="White" VerticalOptions="End"></Button>
+        <Button Command="{Binding RefreshCommand}" Text="Refresh" BackgroundColor="LightBlue" TextColor="White" VerticalOptions="End"></Button>
     </StackLayout>
 
 </ContentPage>

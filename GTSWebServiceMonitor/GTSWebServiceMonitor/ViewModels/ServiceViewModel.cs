@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GTSWebServiceMonitor.DB;
+using GTSWebServiceMonitor.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,16 +10,31 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace GTSWebServiceMonitor.ViewModel
+namespace GTSWebServiceMonitor.ViewModels
 {
-    public class ServiceViewModel : BaseViewModel
+    public class ServiceViewModel : BaseNotifyPropertyChanged, IDisposable
     {
 
         public ObservableCollection<Service> Services { get; set; }
         public ICommand RefreshCommand { get; set; }
-
+        public ICommand AddCommand { get; set; }
+        private Service selectedService;
+        public Service SelectedService
+        {
+            get
+            {
+                return selectedService;
+            }
+            set
+            {
+                this.selectedService = value;
+                if (value != null)
+                    MessagingCenter.Send<Service>(value, Constants.SelectedServiceMessage);
+            }
+        }
         public ServiceViewModel()
         {
+            this.Services = ServiceDataAccess.DataAccess.Services;
             this.RefreshCommand = new Command(() =>
             {
                 Refresh();
@@ -26,14 +43,22 @@ namespace GTSWebServiceMonitor.ViewModel
                 return this.Services.Count > 0;
             });
 
-            this.Services = new ObservableCollection<Service>()
+            this.AddCommand = new Command(() =>
             {
-                //TODO Cadastro
-                new Service { Description="CAMERA GARAGEM FRENTE", URL = "http://neuropsicotico.servebeer.com:8081" },
-                new Service { Description="CAMERA GARAGEM ATRÁS", URL = "http://neuropsicotico.servebeer.com:8082" },
-                new Service { Description="CAMERA LATERAL ATRÁS", URL = "http://neuropsicotico.servebeer.com:8083" },
-                new Service { Description="ROTEADOR", URL = "http://192.168.16.1" }
-            };
+                MessagingCenter.Send<Service>(new Service(), Constants.AddServiceMessage);
+            });
+
+            MessagingCenter.Subscribe<Service>(this, Constants.AddServiceSuccessMessage, (service) =>
+            {
+                ReloadServices();
+            });
+            
+            ReloadServices();
+        }
+        
+        private void ReloadServices()
+        {
+
         }
 
         private void Refresh()
@@ -44,5 +69,9 @@ namespace GTSWebServiceMonitor.ViewModel
             }
         }
 
+        public void Dispose()
+        {
+            MessagingCenter.Unsubscribe<Service>(this, Constants.AddServiceSuccessMessage);
+        }
     }
 }

@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GTSWebServiceMonitor.ViewModel
+namespace GTSWebServiceMonitor.Models
 {
-   public class BaseViewModel : INotifyPropertyChanged
+   public class BaseNotifyPropertyChanged : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

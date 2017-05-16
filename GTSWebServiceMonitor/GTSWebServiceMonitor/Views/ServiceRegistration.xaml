@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GTSWebServiceMonitor.Views.ServiceRegister">
+             x:Class="GTSWebServiceMonitor.Views.ServiceRegistration">
     <StackLayout>
         <TableView Intent="Form" VerticalOptions="StartAndExpand">
             <TableRoot>
-                <TableSection Title="Service Register">
-                    <EntryCell Text="Name"></EntryCell>
-                    <EntryCell Text="URL"></EntryCell>
+                <TableSection Title="Service Registration">
+                    <EntryCell Label="Description" Text="{Binding Service.Description}"></EntryCell>
+                    <EntryCell Label="URL" Text="{Binding Service.URL}" ></EntryCell>
                 </TableSection>
             </TableRoot>
         </TableView>
-        <Button Text="Save" 
-        VerticalOptions="End"></Button>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Remove" HorizontalOptions="FillAndExpand" BackgroundColor="Tomato" Command="{Binding RemoveCommand}}"></Button>
+            <Button Text="Save" HorizontalOptions="FillAndExpand" BackgroundColor="LightGreen" Command="{Binding SaveCommand}}"></Button>
+        </StackLayout>
     </StackLayout>
 </ContentPage>
