@@ -32,6 +32,7 @@ namespace GTSWebServiceMonitor.ViewModels
                     MessagingCenter.Send<Service>(value, Constants.SelectedServiceMessage);
             }
         }
+
         public ServiceViewModel()
         {
             this.Services = ServiceDataAccess.DataAccess.Services;
