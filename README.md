@@ -7,10 +7,10 @@ This project is for fun... have fun with me...
 
 Some screenshots:
 
-![alt text](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902350.png =250x)
-![alt text](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902357.png =250x)
-![alt text](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902399.png =250x)
-![alt text](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902402.png =250x)
-![alt text](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902406.png =250x)
-![alt text](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902416.png =250x)
-![alt text](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902564.png =250x)
+![](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902350.png | width=100)
+![](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902357.png | width=100)
+![](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902399.png | width=100)
+![](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902402.png | width=100)
+![](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902406.png | width=100)
+![](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902416.png | width=100)
+![](https://github.com/gabrielts/WebMonitor/blob/master/Screenshots/Screenshot_1494902564.png | width=100)
